@@ -1,0 +1,32 @@
+{
+  "name": "maya-red-system-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mayahq/maya-red-system-utils/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mayahq/maya-red-system-utils"
+  },
+  "keywords": [
+    "desktop utils"
+  ],
+  "node-red": {
+    "nodes": {
+      "desktop-clipboard-add": "desktop/clipboard/add.js",
+      "desktop-clipboard-get": "desktop/clipboard/get.js",
+      "desktop-system-open": "desktop/system/open.js"
+    }
+  },
+  "dependencies": {
+    "copy-paste": "^1.3.0",
+    "open": "^7.1.0"
+  }
+}
