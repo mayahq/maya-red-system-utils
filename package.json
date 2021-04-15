@@ -1,6 +1,6 @@
 {
   "name": "maya-red-system-utils",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,11 +22,14 @@
     "nodes": {
       "desktop-clipboard-add": "desktop/clipboard/add.js",
       "desktop-clipboard-get": "desktop/clipboard/get.js",
-      "desktop-system-open": "desktop/system/open.js"
+      "desktop-system-open": "desktop/system/open.js",
+      "desktop-system-notify": "desktop/system/notify.js",
+      "desktop-macos-notify": "desktop/macos/notify.js"
     }
   },
   "dependencies": {
     "copy-paste": "^1.3.0",
+    "node-notifier": "^9.0.1",
     "open": "^7.1.0"
   }
 }

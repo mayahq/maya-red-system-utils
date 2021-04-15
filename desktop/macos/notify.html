@@ -1,0 +1,179 @@
+<script type="text/javascript">
+  RED.nodes.registerType("desktop-macos-notify", {
+    category: "macos",
+    color: "#8BBDD9",
+    defaults: {
+      name: { value: "" },
+      title: {
+        value: "",
+        required: true,
+        validate: RED.validators.typedInput("titleType"),
+      },
+      titleType: { value: "str" },
+      message: {
+        value: "",
+        required: true,
+        validate: RED.validators.typedInput("messageType"),
+      },
+      messageType: { value: "str" },
+      reply: { value: false },
+      wait: { value: true },
+      sound: { value: false },
+      closeBtn: {
+        value: "",
+        validate: RED.validators.typedInput("closeBtnType"),
+      },
+      closeBtnType: { value: "str" },
+      actionBtn: {
+        value: "",
+        validate: RED.validators.typedInput("actionBtnType"),
+      },
+      actionBtnType: { value: "str" },
+    },
+    inputs: 1,
+    outputs: 5,
+    outputLabels: ["onClick", "onReply", "onTimeout", "onAction", "onClose"],
+    icon: "fa-keyboard-o.png",
+    label: function () {
+      return this.name || "MacOS Notification";
+    },
+    paletteLabel: "macos-notify",
+    oneditprepare: function () {
+      if (this.titleType == null) {
+        if (this.title == "") {
+          this.titleType = "date";
+        } else {
+          this.titleType = "str";
+        }
+      } else if (this.titleType === "string" || this.titleType === "none") {
+        this.titleType = "str";
+      }
+      $("#node-input-titleType").val(this.titleType);
+
+      $("#node-input-title").typedInput({
+        default: "str",
+        typeField: $("#node-input-titleType"),
+        types: ["flow", "global", "msg", "str"],
+      });
+
+      $("#node-input-title").typedInput("type", this.titleType);
+
+      if (this.messageType == null) {
+        if (this.message == "") {
+          this.messageType = "date";
+        } else {
+          this.messageType = "str";
+        }
+      } else if (this.messageType === "string" || this.messageType === "none") {
+        this.messageType = "str";
+      }
+      $("#node-input-messageType").val(this.messageType);
+
+      $("#node-input-message").typedInput({
+        default: "str",
+        typeField: $("#node-input-messageType"),
+        types: ["flow", "global", "msg", "str"],
+      });
+
+      $("#node-input-message").typedInput("type", this.messageType);
+
+      //
+
+      if (this.closeBtnType == null) {
+        if (this.closeBtn == "") {
+          this.closeBtnType = "date";
+        } else {
+          this.closeBtnType = "str";
+        }
+      } else if (
+        this.closeBtnType === "string" ||
+        this.closeBtnType === "none"
+      ) {
+        this.closeBtnType = "str";
+      }
+      $("#node-input-closeBtnType").val(this.closeBtnType);
+
+      $("#node-input-closeBtn").typedInput({
+        default: "str",
+        typeField: $("#node-input-closeBtnType"),
+        types: ["flow", "global", "msg", "str"],
+      });
+
+      $("#node-input-closeBtn").typedInput("type", this.closeBtnType);
+
+      //
+
+      if (this.actionBtnType == null) {
+        if (this.closeBtn == "") {
+          this.actionBtnType = "date";
+        } else {
+          this.actionBtnType = "str";
+        }
+      } else if (
+        this.actionBtnType === "string" ||
+        this.actionBtnType === "none"
+      ) {
+        this.actionBtnType = "str";
+      }
+      $("#node-input-actionBtnType").val(this.actionBtnType);
+
+      $("#node-input-actionBtn").typedInput({
+        default: "str",
+        typeField: $("#node-input-actionBtnType"),
+        types: ["flow", "global", "msg", "str"],
+      });
+
+      $("#node-input-actionBtn").typedInput("type", this.actionBtnType);
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="desktop-macos-notify">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+          <label for="node-input-title"><i class="fa fa-envelope"></i> <span data-i18n="common.label.text"></span>Title</label>
+          <input type="text" id="node-input-title" style="width:70%">
+          <input type="hidden" id="node-input-titleType">
+      </div>
+    <div class="form-row">
+          <label for="node-input-message"><i class="fa fa-envelope"></i> <span data-i18n="common.label.text"></span>Message</label>
+          <input type="text" id="node-input-message" style="width:70%">
+          <input type="hidden" id="node-input-messageType">
+      </div>
+      <div class="form-row">
+          <label for="node-input-closeBtn"><i class="fa fa-envelope"></i> <span data-i18n="common.label.text"></span>closeBtn label</label>
+          <input type="text" id="node-input-closeBtn" style="width:70%">
+          <input type="hidden" id="node-input-closeBtnType">
+      </div>
+      <div class="form-row">
+          <label for="node-input-actionBtn"><i class="fa fa-envelope"></i> <span data-i18n="common.label.text"></span>actionBtn label</label>
+          <input type="text" id="node-input-actionBtn" style="width:70%">
+          <input type="hidden" id="node-input-actionBtnType">
+      </div>
+      <div class="form-row">
+        <label for="node-input-sound" style="vertical-align: top"><i class="fa fa-refresh"></i> Sound</label>
+        <input type="checkbox" id="node-input-sound" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-sound" style="width: 70%;">Enable default notification sound?</label>
+    </div>
+      <div class="form-row">
+        <label for="node-input-reply" style="vertical-align: top"><i class="fa fa-refresh"></i> Reply</label>
+        <input type="checkbox" id="node-input-reply" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-reply" style="width: 70%;">Get reply from user on showing notification?</label>
+    </div>
+    <div class="form-row">
+        <label for="node-input-wait" style="vertical-align: top"><i class="fa fa-refresh"></i> Wait</label>
+        <input type="checkbox" id="node-input-wait" style="display: inline-block; width: auto; vertical-align: top;">
+        <label for="node-input-wait" style="width: 70%;">Wait for user action before timeout in 5s?</label>
+    </div>
+
+
+  <div class="form-tips" data-i18n="[html]inject.tip">This will only work on macOS version 10.8 or higher. Make sure you empty the actionBtn label and closeBtn label before you check reply : true</div>
+</script>
+
+<script type="text/x-red" data-help-name="desktop-macos-notify">
+  <p>Send cross platform native notifications on MacOS.</p>
+</script>
