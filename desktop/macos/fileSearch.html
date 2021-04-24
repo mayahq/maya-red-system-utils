@@ -41,7 +41,7 @@
 
     <div class="form-row">
       <label for="node-input-kind"><i class="fa fa-tag"></i> Kind</label>
-      <select name="kind" id="node-input-kind" style="width:70%;" />
+      <select name="kind" id="node-input-kind" style="width:70%;" >
         <option value="app">app</option>
         <option value="image">image</option>
         <option value="pdf">pdf</option>
@@ -53,12 +53,19 @@
     </div>
 
     <div class="form-row">
-      <label for="node-input-onlyin"><i class="fa fa-tag"></i> Search in directory</label>
+      <label for="node-input-onlyin"><i class="fa fa-tag"></i> Directory</label>
       <input type="text" id="node-input-onlyin" style="width:70%;"/>
     </div>
 
 </script>
 
 <script type="text/x-red" data-help-name="desktop-macos-file-search">
-  <p>Search for files on MacOS</p>
+  <p>Search for files on MacOS. It takes the following inputs:<br><br>
+
+    fileName: name of the file/search term<br>
+    kind: The file type (default is 'app')<br>
+    Directory: Directory inside which you want to search for the file<br><br>
+
+    If the node is pre-configured by the user, it takes that value, otherwise it fetches values from msg.payload
+  </p>
 </script>
