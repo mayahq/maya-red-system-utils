@@ -24,7 +24,8 @@
       "desktop-clipboard-get": "desktop/clipboard/get.js",
       "desktop-system-open": "desktop/system/open.js",
       "desktop-system-notify": "desktop/system/notify.js",
-      "desktop-macos-notify": "desktop/macos/notify.js"
+      "desktop-macos-notify": "desktop/macos/notify.js",
+      "desktop-macos-file-search": "desktop/macos/fileSearch.js"
     }
   },
   "dependencies": {

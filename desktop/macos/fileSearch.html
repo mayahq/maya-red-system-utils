@@ -1,0 +1,56 @@
+<script type="text/javascript">
+  RED.nodes.registerType("desktop-macos-file-search", {
+    category: "macos",
+    color: "#8BBDD9",
+    defaults: {
+      name: { value: "" },
+      fileName: {
+        value: "", 
+        required: false
+      },
+      kind: {
+        value: "", 
+        required: false
+      },
+      onlyin: {
+        value: "", 
+        required: false
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "fa-keyboard-o.png",
+    label: function () {
+      return this.name || "File Search";
+    },
+    paletteLabel: "macos-file-search",
+   });
+</script>
+
+<script type="text/x-red" data-template-name="desktop-macos-file-search">
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-fileName"><i class="fa fa-tag"></i> File Name</label>
+      <input type="text" id="node-input-fileName" style="width:70%;" />
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-kind"><i class="fa fa-tag"></i> Kind</label>
+      <input type="text" id="node-input-kind" style="width:70%;" />
+    </div>
+
+    <div class="form-row">
+      <label for="node-input-onlyin"><i class="fa fa-tag"></i> onlyin</label>
+      <input type="text" id="node-input-onlyin" style="width:70%;"/>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="desktop-macos-file-search">
+  <p>Search for files on MacOS</p>
+</script>
