@@ -36,7 +36,8 @@ module.exports = function (RED) {
           let filePaths = stdout.slice(0,-1).split('\n');
           
           for(let filePath of filePaths){
-              var displayName = filePath.substring(filePath.lastIndexOf("/")+1, filePath.length);
+              var temp = filePath.substring(filePath.lastIndexOf("/")+1, filePath.lengthg);
+              var displayName = temp.substring(0,temp.indexOf('.'));
               let obj = {
                   "value" : displayName, 
                       "meta": {
