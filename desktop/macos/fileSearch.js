@@ -42,7 +42,8 @@ module.exports = function (RED) {
                   "value" : displayName, 
                       "meta": {
                           "path": filePath,
-                          "kind": kind
+                          "kind": kind,
+                          "subtext": kind
                       }
               };
               if(kind === "app"){
