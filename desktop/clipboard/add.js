@@ -2,15 +2,38 @@ var clipboard = require("copy-paste");
 module.exports = function (RED) {
   function DesktopClipboardAdd(config) {
     RED.nodes.createNode(this, config);
-    // this.text = config.text
     this.text = config.text;
+    this.textType = config.textType;
     var node = this;
 
-    //modifying code here
-    this.on("input", function (msg) {
-      console.log(this.text);
+    async function getValue(value, valueType, msg) {
+      return new Promise(function (resolve, reject) {
+        if (valueType === "str") {
+          resolve(value);
+        } else {
+          RED.util.evaluateNodeProperty(
+            value,
+            valueType,
+            this,
+            msg,
+            function (err, res) {
+              if (err) {
+                node.error(err.msg);
+                reject(err.msg);
+              } else {
+                resolve(res);
+              }
+            }
+          );
+        }
+      });
+    }
 
-      clipboard.copy(this.text, function (error) {
+    //modifying code here
+    this.on("input", async function (msg) {
+      console.log(this.text);
+      let text = await getValue(this.text, this.textType, msg);
+      clipboard.copy(text, function (error) {
         if (error) {
           node.status({
             fill: "red",
