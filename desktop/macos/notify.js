@@ -74,6 +74,7 @@ module.exports = function (RED) {
         if (metadata.activationType === "timeout") {
           node.send([null, null, msg, null, null]);
         } else if (metadata.activationType === "replied") {
+          msg.notification.reply = metadata.activationValue
           node.send([null, msg, null, null, null]);
         } else if (metadata.activationType === "actionClicked") {
           node.send([null, null, null, msg, null]);

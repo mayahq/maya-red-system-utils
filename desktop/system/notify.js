@@ -56,11 +56,16 @@ module.exports = function (RED) {
         if (err) throw err;
 
         msg.notification = metadata;
-        if (metadata.activationType === "timeout") {
-          node.send([null, , msg]);
-        } else {
+        if(metadata){
+          if (metadata.activationType === "timeout") {
+            node.send([null, msg]);
+          } else {
+            node.send([msg, null]);
+          }
+        } else{
           node.send([msg, null]);
         }
+        
 
         return;
 

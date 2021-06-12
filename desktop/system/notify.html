@@ -101,6 +101,49 @@
   <div class="form-tips" data-i18n="[html]inject.tip">Standard usage, with cross-platform fallbacks.</div>
 </script>
 
-<script type="text/x-red" data-help-name="desktop-system-notify">
-  <p>Send cross platform native notifications on desktop.</p>
+<script type="text/html" data-help-name="desktop-system-notify">
+  <h2>Description</h2>
+  <p>
+    Send cross platform native notifications on desktop. Standard usage, with
+    cross-platform fallbacks.
+  </p>
+  <br />
+
+  <h2>Config</h2>
+  <dl class="message-properties">
+    <dt>title<span class="property-type">string</span></dt>
+    <dd>Title heading of the desktop notification sent.</dd>
+
+    <dt>message<span class="property-type">string</span></dt>
+    <dd>Main message of the desktop notification.</dd>
+
+    <dt>sound<span class="property-type">checkbox</span></dt>
+    <dd>Enable default notification sound?</dd>
+
+    <dt>wait<span class="property-type">checkbox</span></dt>
+    <dd>Wait for user action before timeout in 5s?</dd>
+  </dl>
+  <br />
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      onClick
+      <dl class="message-properties">
+        <dd>
+          If notification is clicked, then <code>msg</code> is outputted from
+          this port.
+        </dd>
+      </dl>
+    </li>
+    <li>
+      onTimeout
+      <dl class="message-properties">
+        <dd>
+          If notification is not clicked, then <code>msg</code> is outputted
+          from this port after timeout of 5 seconds.
+        </dd>
+      </dl>
+    </li>
+  </ol>
 </script>
