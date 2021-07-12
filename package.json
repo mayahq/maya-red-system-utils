@@ -18,19 +18,23 @@
   "keywords": [
     "desktop utils"
   ],
+  "nodepath": "src/nodes",
+  "nodeRedModuleName": "maya-red-system-utils",
   "node-red": {
     "nodes": {
-      "desktop-clipboard-add": "desktop/clipboard/add.js",
-      "desktop-clipboard-get": "desktop/clipboard/get.js",
-      "desktop-system-open": "desktop/system/open.js",
-      "desktop-system-notify": "desktop/system/notify.js",
-      "desktop-macos-notify": "desktop/macos/notify.js",
-      "desktop-macos-file-search": "desktop/macos/fileSearch.js"
+      "desktop-clipboard-add": "src/nodes/desktopClipboardAdd/desktopClipboardAdd.node.js",
+      "desktop-clipboard-get": "src/nodes/desktopClipboardGet/desktopClipboardGet.node.js",
+      "desktop-system-open": "src/nodes/desktopSystemOpen/desktopSystemOpen.node.js",
+      "desktop-system-notify": "src/nodes/desktopSystemNotify/desktopSystemNotify.node.js",
+      "desktop-macos-notify": "src/nodes/desktopMacosNotify/desktopMacosNotify.node.js",
+      "desktop-macos-file-search": "src/nodes/desktopMacosFileSearch/desktopMacosFileSearch.node.js"
     }
   },
   "dependencies": {
     "copy-paste": "^1.3.0",
     "fastmq": "^1.3.8",
-    "node-notifier": "^9.0.1"
+    "node-notifier": "^10.0.0",
+    "path-validation": "^0.2.3",
+    "@mayahq/module-sdk": "^0.3.0"
   }
 }

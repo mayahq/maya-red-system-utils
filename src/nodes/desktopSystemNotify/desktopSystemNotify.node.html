@@ -1,0 +1,181 @@
+<script type='text/javascript'>
+    RED.nodes.registerType("desktop-system-notify", {
+        category: "Maya Red System Utils",
+        color: "#8BBDD9",
+        defaults: {
+            name: {
+                value: ""
+            },
+            isProfileConfigNode: {
+                value: false
+            },
+            title: {
+                value: ""
+            },
+            payloadTypetitle: {
+                value: "str"
+            },
+            message: {
+                value: ""
+            },
+            payloadTypemessage: {
+                value: "str"
+            },
+            wait: {
+                value: "true"
+            },
+            payloadTypewait: {
+                value: "bool"
+            },
+            sound: {
+                value: "true"
+            },
+            payloadTypesound: {
+                value: "bool"
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "fa-file-code-o.png",
+        label: function() {
+            return this.name || "desktop-system-notify"
+        },
+        paletteLabel: "desktop-system-notify",
+        exportable: true,
+        oneditprepare: function() {
+            if (this.payloadTypetitle === null) {
+                if (this.title === "") {
+                    this.payloadTypetitle = "date"
+                } else {
+                    this.payloadTypetitle = "str"
+                }
+            } else if (this.payloadTypetitle === 'string' || this.payloadTypetitle === 'none') {
+                this.payloadTypetitle = "str"
+            }
+
+            $("#node-input-payloadTypetitle").val(this.payloadTypetitle)
+            $("#node-input-title").typedInput({
+                default: "str",
+                typeField: $("#node-input-payloadTypetitle"),
+                types: ["msg", "flow", "global", "str"]
+            })
+            $("#node-input-title").typedInput("type", this.payloadTypetitle)
+
+            if (this.payloadTypemessage === null) {
+                if (this.message === "") {
+                    this.payloadTypemessage = "date"
+                } else {
+                    this.payloadTypemessage = "str"
+                }
+            } else if (this.payloadTypemessage === 'string' || this.payloadTypemessage === 'none') {
+                this.payloadTypemessage = "str"
+            }
+
+            $("#node-input-payloadTypemessage").val(this.payloadTypemessage)
+            $("#node-input-message").typedInput({
+                default: "str",
+                typeField: $("#node-input-payloadTypemessage"),
+                types: ["msg", "flow", "global", "str"]
+            })
+            $("#node-input-message").typedInput("type", this.payloadTypemessage)
+
+            if (this.payloadTypewait === null) {
+                if (this.wait === "") {
+                    this.payloadTypewait = "date"
+                } else {
+                    this.payloadTypewait = "bool"
+                }
+            } else if (this.payloadTypewait === 'string' || this.payloadTypewait === 'none') {
+                this.payloadTypewait = "bool"
+            }
+
+            $("#node-input-payloadTypewait").val(this.payloadTypewait)
+            $("#node-input-wait").typedInput({
+                default: "bool",
+                typeField: $("#node-input-payloadTypewait"),
+                types: ["msg", "flow", "global", "bool"]
+            })
+            $("#node-input-wait").typedInput("type", this.payloadTypewait)
+
+            if (this.payloadTypesound === null) {
+                if (this.sound === "") {
+                    this.payloadTypesound = "date"
+                } else {
+                    this.payloadTypesound = "bool"
+                }
+            } else if (this.payloadTypesound === 'string' || this.payloadTypesound === 'none') {
+                this.payloadTypesound = "bool"
+            }
+
+            $("#node-input-payloadTypesound").val(this.payloadTypesound)
+            $("#node-input-sound").typedInput({
+                default: "bool",
+                typeField: $("#node-input-payloadTypesound"),
+                types: ["msg", "flow", "global", "bool"]
+            })
+            $("#node-input-sound").typedInput("type", this.payloadTypesound)
+
+        },
+        oneditsave: function() {},
+        oneditcancel: function() {},
+        oneditdelete: function() {},
+        oneditresize: function() {},
+        onpaletteadd: function() {},
+        onpaletteremove: function() {}
+    });
+</script>
+
+<script type="text/html" data-template-name="desktop-system-notify">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-title">title</label>
+        <input type="text" id="node-input-title"></input>
+        <input type="hidden" id="node-input-payloadTypetitle">
+    </div>
+    <div class="form-row">
+        <label for="node-input-message">message</label>
+        <input type="text" id="node-input-message"></input>
+        <input type="hidden" id="node-input-payloadTypemessage">
+    </div>
+    <div class="form-row">
+        <label for="node-input-wait">wait</label>
+        <input type="text" id="node-input-wait"></input>
+        <input type="hidden" id="node-input-payloadTypewait">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sound">sound</label>
+        <input type="text" id="node-input-sound"></input>
+        <input type="hidden" id="node-input-payloadTypesound">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="desktop-system-notify">
+    <h2>Description</h2>
+    <p>Query opens tabs based on criteria like URL, muted status</p>
+
+    <h2>Config</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+
+
+    <h2>Outputs</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+</script>

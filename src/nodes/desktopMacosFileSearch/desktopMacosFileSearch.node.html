@@ -1,0 +1,137 @@
+<script type='text/javascript'>
+    RED.nodes.registerType("desktop-macos-file-search", {
+        category: "Maya Red System Utils",
+        color: "#8BBDD9",
+        defaults: {
+            name: {
+                value: ""
+            },
+            isProfileConfigNode: {
+                value: false
+            },
+            query: {
+                value: ""
+            },
+            payloadTypequery: {
+                value: "str"
+            },
+            kind: {
+                value: "app"
+            },
+            onlyin: {
+                value: ""
+            },
+            payloadTypeonlyin: {
+                value: "str"
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "fa-file-code-o.png",
+        label: function() {
+            return this.name || "desktop-macos-file-search"
+        },
+        paletteLabel: "desktop-macos-file-search",
+        exportable: true,
+        oneditprepare: function() {
+            if (this.payloadTypequery === null) {
+                if (this.query === "") {
+                    this.payloadTypequery = "date"
+                } else {
+                    this.payloadTypequery = "str"
+                }
+            } else if (this.payloadTypequery === 'string' || this.payloadTypequery === 'none') {
+                this.payloadTypequery = "str"
+            }
+
+            $("#node-input-payloadTypequery").val(this.payloadTypequery)
+            $("#node-input-query").typedInput({
+                default: "str",
+                typeField: $("#node-input-payloadTypequery"),
+                types: ["msg", "flow", "global", "str"]
+            })
+            $("#node-input-query").typedInput("type", this.payloadTypequery)
+
+            const kindselectFieldValues = ["app", "application", "applications", "audio", "music", "folder", "folders", "image", "images", "movie", "movies", "pdf", "pdfs", "presentation", "presentations", "email", "emails"]
+            kindselectFieldValues.forEach((val) => {
+                $("#node-input-kind").append($("<option></option>").attr("value", val).text(val))
+            })
+            $("#node-input-kind").val(this.kind)
+
+            if (this.payloadTypeonlyin === null) {
+                if (this.onlyin === "") {
+                    this.payloadTypeonlyin = "date"
+                } else {
+                    this.payloadTypeonlyin = "str"
+                }
+            } else if (this.payloadTypeonlyin === 'string' || this.payloadTypeonlyin === 'none') {
+                this.payloadTypeonlyin = "str"
+            }
+
+            $("#node-input-payloadTypeonlyin").val(this.payloadTypeonlyin)
+            $("#node-input-onlyin").typedInput({
+                default: "str",
+                typeField: $("#node-input-payloadTypeonlyin"),
+                types: ["msg", "flow", "global", "str"]
+            })
+            $("#node-input-onlyin").typedInput("type", this.payloadTypeonlyin)
+
+        },
+        oneditsave: function() {},
+        oneditcancel: function() {},
+        oneditdelete: function() {},
+        oneditresize: function() {},
+        onpaletteadd: function() {},
+        onpaletteremove: function() {}
+    });
+</script>
+
+<script type="text/html" data-template-name="desktop-macos-file-search">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-query">query</label>
+        <input type="text" id="node-input-query"></input>
+        <input type="hidden" id="node-input-payloadTypequery">
+    </div>
+    <div class="form-row">
+        <label for="node-input-kind">kind</label>
+        <select type="text" id="node-input-kind">
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-onlyin">onlyin</label>
+        <input type="text" id="node-input-onlyin"></input>
+        <input type="hidden" id="node-input-payloadTypeonlyin">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="desktop-macos-file-search">
+    <h2>Description</h2>
+    <p>Query opens tabs based on criteria like URL, muted status</p>
+
+    <h2>Config</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+
+
+    <h2>Outputs</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+</script>
