@@ -2,7 +2,7 @@ module.exports = function (RED) {
   function DesktopSystemOpen(config) {
     RED.nodes.createNode(this, config);
     const FastMQ = require('fastmq');
-    const validator = require("path-validation")
+    var isValid = require('is-valid-path');
     this.target = config.target;
     this.targetType = config.targetType;
     var node = this;
@@ -70,12 +70,17 @@ module.exports = function (RED) {
     //modifying code here
     this.on("input", async (msg) => {
       let target = await getValue(this.target, this.targetType, msg);
-      // assuming its either url or filepath
-      if(validator.isAbsolutePath(target)){
-        openFromElectron("master","path",target);
+      if(isValid(target)){
+        if(target.startsWith('https://') || target.startsWith('http://')){
+          openFromElectron("master","url",target);
+        }
+        else{
+          openFromElectron("master","path",target);
+        }
       }
       else{
-        openFromElectron("master","url",target);
+        // error
+        console.log('ERROR: not a valid path')
       }
       
       node.send(msg);

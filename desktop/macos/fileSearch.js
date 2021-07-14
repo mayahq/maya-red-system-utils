@@ -42,7 +42,7 @@ module.exports = function (RED) {
               let obj = {
                   "value" : displayName, 
                       "meta": {
-                          "path": path,
+                          "path": filePath,
                           "kind": kind,
                           "subtext": kind
                       }
