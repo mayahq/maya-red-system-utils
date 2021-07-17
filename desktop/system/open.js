@@ -2,7 +2,7 @@ module.exports = function (RED) {
   function DesktopSystemOpen(config) {
     RED.nodes.createNode(this, config);
     const FastMQ = require('fastmq');
-    var isValid = require('is-valid-path');
+    const URL = require("url").URL;
     this.target = config.target;
     this.targetType = config.targetType;
     var node = this;
@@ -67,20 +67,26 @@ module.exports = function (RED) {
       });
     }
 
+    const stringIsAValidUrl = (s) => {
+      try {
+        new URL(s);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    };
+
     //modifying code here
     this.on("input", async (msg) => {
       let target = await getValue(this.target, this.targetType, msg);
-      if(isValid(target)){
+      console.log("isValidURL: ",stringIsAValidUrl(target));
+      if(stringIsAValidUrl(target)){
         if(target.startsWith('https://') || target.startsWith('http://')){
           openFromElectron("master","url",target);
         }
-        else{
-          openFromElectron("master","path",target);
-        }
       }
       else{
-        // error
-        console.log('ERROR: not a valid path')
+        openFromElectron("master","path",target);
       }
       
       node.send(msg);
