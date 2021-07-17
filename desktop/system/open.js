@@ -20,6 +20,7 @@ module.exports = function (RED) {
             function (err, res) {
               if (err) {
                 node.error(err.msg);
+                console.log(err)
                 reject(err.msg);
               } else {
                 resolve(res);
@@ -78,18 +79,24 @@ module.exports = function (RED) {
 
     //modifying code here
     this.on("input", async (msg) => {
-      let target = await getValue(this.target, this.targetType, msg);
-      console.log("isValidURL: ",stringIsAValidUrl(target));
-      if(stringIsAValidUrl(target)){
-        if(target.startsWith('https://') || target.startsWith('http://')){
-          openFromElectron("master","url",target);
+      try{
+        let target = await getValue(this.target, this.targetType, msg);
+        console.log("isValidURL: ",target,stringIsAValidUrl(target));
+        if(stringIsAValidUrl(target)){
+          if(target.startsWith('https://') || target.startsWith('http://')){
+            openFromElectron("master","url",target);
+          }
         }
+        else{
+          openFromElectron("master","path",target);
+        }
+      
+        node.send(msg);
       }
-      else{
-        openFromElectron("master","path",target);
+      catch(e){
+        console.log("ERROR Occurred: ", e)
       }
       
-      node.send(msg);
     });
     oneditprepare: function oneditprepare() {
       $("#node-input-target").val(this.target);
