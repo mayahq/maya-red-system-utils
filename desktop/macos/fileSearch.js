@@ -11,12 +11,37 @@ module.exports = function (RED) {
     this.onlyinType = config.onlyinType;
     var node = this;
 
-    const getIcon = async (filePath) => {
-      const {stdout, stderr, err} = await exec(`ls ${filePath.replace(/\s/g, '\\ ')+"/Contents/Resources/*.icns"}`);
+    const getIcon = async (filePath, fileName) => {
+      const path = filePath.replace(/\s/g, '\\ ');
+      const {stdout, stderr, err} = await exec(`ls ${path}/Contents/Resources/*.icns`);
       if(stderr || err){
+          console.log("ERROR: ", stderr);
           return "";
       }
-      return stdout.split('\n')[0]
+      iconList = stdout.split('\n');
+      //console.log(iconList)
+      // 1) AppIcon.icns
+      for(let icon of iconList){
+        if(icon.includes('AppIcon') || icon.includes('appicon')){
+          // console.log('returning AppIcon.icns', icon, fileName)
+          return icon;
+        }
+      }
+      // 2) contains app name(s)
+      let fileNameList = fileName.split(' ');
+      for(let icon of iconList){
+        var temp = icon.substring(icon.lastIndexOf("/")+1, icon.length);
+        var lower_icon = temp.substring(0,temp.indexOf('.')).toLowerCase();
+        for(l of fileNameList){
+          if(l.toLowerCase() === lower_icon){
+            // console.log('returning icon matching app name', icon, fileName)
+            return icon;
+          }
+        }
+      }
+      // 3) 0th index
+      // console.log("returning 0th index", iconList[0], fileName);
+      return iconList[0];
     }
 
     const findFiles = async (query, kind, onlyin) => {
@@ -48,7 +73,7 @@ module.exports = function (RED) {
                       }
               };
               if(kind === "app"){
-                  obj.meta.icon = await getIcon(path).catch((e) => {
+                  obj.meta.icon = await getIcon(filePath, displayName).catch((e) => {
                       //console.log("here",e);
                   });
               }
@@ -87,11 +112,6 @@ module.exports = function (RED) {
 
     //modifying code here
     this.on("input", async (msg) => {
-      // fetch details from msg.payload as well
-      // const {query,kind,onlyin} = msg.payload;
-      // this.query = this.query ? this.query : query;
-      // this.kind = this.kind ? this.kind : kind;
-      // this.onlyin = this.onlyin ? this.onlyin : onlyin;
 
       let query = await getValue(this.query, this.queryType, msg);
       let onlyin = await getValue(this.onlyin, this.onlyinType, msg);
