@@ -61,23 +61,25 @@ module.exports = function (RED) {
           let filePaths = stdout.slice(0,-1).split('\n');
           
           for(let filePath of filePaths){
-              let path = filePath.replace(/\s/g,"\\ ");
-              var temp = filePath.substring(filePath.lastIndexOf("/")+1, filePath.length);
-              var displayName = temp.substring(0,temp.indexOf('.'));
-              let obj = {
-                  "value" : displayName, 
-                      "meta": {
-                          "path": filePath,
-                          "kind": kind,
-                          "subtext": kind
-                      }
-              };
-              if(kind === "app"){
-                  obj.meta.icon = await getIcon(filePath, displayName).catch((e) => {
-                      //console.log("here",e);
-                  });
+              if(filePath && filePath.length > 0){
+                let path = filePath.replace(/\s/g,"\\ ");
+                var temp = filePath.substring(filePath.lastIndexOf("/")+1, filePath.length);
+                var displayName = temp.substring(0,temp.indexOf('.'));
+                let obj = {
+                    "value" : displayName, 
+                        "meta": {
+                            "path": filePath,
+                            "kind": kind,
+                            "subtext": kind
+                        }
+                };
+                if(kind === "app"){
+                    obj.meta.icon = await getIcon(filePath, displayName).catch((e) => {
+                        //console.log("here",e);
+                    });
+                }
+                out.push(obj);
               }
-              out.push(obj);
           }
       }
       catch(e){
