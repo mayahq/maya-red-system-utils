@@ -48,8 +48,9 @@ class DesktopMacosNotify extends Node {
         nc.notify(options, (err, response, metadata) => {
             // Response is response from notification
             if (err){
-                console.log(err)
-                this.setStatus("ERROR", "error: " + err.toString().substring(0, 10) + "...");
+              console.log(err)
+              this.setStatus("ERROR", "error: " + err.toString().substring(0, 10) + "...");
+              // throw err
             }
             this.setStatus("SUCCESS", "");
             msg.notification = metadata;
