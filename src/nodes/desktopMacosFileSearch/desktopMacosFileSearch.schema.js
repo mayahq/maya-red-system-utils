@@ -27,22 +27,48 @@ class DesktopMacosFileSearch extends Node {
         // Do something on initialization of node
     }
 
-    async getIcon(filePath){
-      const {stdout, stderr, err} = await exec(`ls ${filePath.replace(/\s/g, '\\ ')+"/Contents/Resources/*.icns"}`);
+    async getIcon(filePath, fileName){
+      const path = filePath.replace(/\s/g, '\\ ');
+      const {stdout, stderr, err} = await exec(`ls ${path}/Contents/Resources/*.icns`);
       if(stderr || err){
+          console.log("ERROR: ", stderr);
           return "";
       }
-      return stdout.split('\n')[0]
+      iconList = stdout.split('\n');
+      //console.log(iconList)
+      // 1) AppIcon.icns
+      for(let icon of iconList){
+        if(icon.includes('AppIcon') || icon.includes('appicon')){
+          // console.log('returning AppIcon.icns', icon, fileName)
+          return icon;
+        }
+      }
+      // 2) contains app name(s)
+      let fileNameList = fileName.split(' ');
+      for(let icon of iconList){
+        var temp = icon.substring(icon.lastIndexOf("/")+1, icon.length);
+        var lower_icon = temp.substring(0,temp.indexOf('.')).toLowerCase();
+        for(l of fileNameList){
+          if(l.toLowerCase() === lower_icon){
+            // console.log('returning icon matching app name', icon, fileName)
+            return icon;
+          }
+        }
+      }
+      // 3) 0th index
+      // console.log("returning 0th index", iconList[0], fileName);
+      return iconList[0];
     }
 
     async findFiles(query, kind, onlyin){
         let out = [];
+        let allowedKinds = ["app", "application", "applications", "audio", "music", "folder", "folders", "image", "images", "movie", "movies", "pdf", "pdfs", "presentation", "presentations", "email", "emails"];
         if(!(query && query!== "")){
-          return {out, err: "invalid configs"};
+            return {out, err: "invalid configs"};
         }
         console.log("configs", query, kind, onlyin)
         try{
-            let command = `cd ~ && mdfind kind:${kind} ${onlyin ? "-onlyin "+onlyin+" " : ""}${query}`;
+            let command = `cd ~ && mdfind kind:${kind && allowedKinds.includes(kind) ? kind : "app"} ${onlyin ? "-onlyin "+onlyin+" " : ""}${query}`;
             const {stdout,stderr} = await exec(command);
             if(stderr){
                 throw Error(stderr);
@@ -51,23 +77,25 @@ class DesktopMacosFileSearch extends Node {
             let filePaths = stdout.slice(0,-1).split('\n');
             
             for(let filePath of filePaths){
-                let path = filePath.replace(/\s/g,"\\ ");
-                var temp = filePath.substring(filePath.lastIndexOf("/")+1, filePath.length);
-                var displayName = temp.substring(0,temp.indexOf('.'));
-                let obj = {
-                    "value" : displayName, 
-                        "meta": {
-                            "path": path,
-                            "kind": kind,
-                            "subtext": kind
-                        }
-                };
-                if(kind === "app"){
-                    obj.meta.icon = await getIcon(path).catch((e) => {
-                        //console.log("here",e);
-                    });
+                if(filePath && filePath.length > 0){
+                    let path = filePath.replace(/\s/g,"\\ ");
+                    var temp = filePath.substring(filePath.lastIndexOf("/")+1, filePath.length);
+                    var displayName = temp.substring(0,temp.indexOf('.'));
+                    let obj = {
+                        "value" : displayName, 
+                            "meta": {
+                                "path": filePath,
+                                "kind": kind,
+                                "subtext": kind
+                            }
+                    };
+                    if(kind === "app"){
+                        obj.meta.icon = await getIcon(filePath, displayName).catch((e) => {
+                            //console.log("here",e);
+                        });
+                    }
+                    out.push(obj);
                 }
-                out.push(obj);
             }
         }
         catch(e){
