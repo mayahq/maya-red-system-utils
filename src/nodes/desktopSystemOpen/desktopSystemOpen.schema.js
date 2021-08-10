@@ -7,8 +7,8 @@ const FastMQ = require('fastmq');
 const validator = require("path-validation")
 
 class DesktopSystemOpen extends Node {
-    constructor(node, RED) {
-        super(node, RED)
+    constructor(node, RED, opts) {
+        super(node, RED, {...opts})
     }
 
     static schema = new Schema({

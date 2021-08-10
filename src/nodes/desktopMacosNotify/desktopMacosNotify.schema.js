@@ -8,8 +8,8 @@ var nc = new notifier.NotificationCenter();
 const path = require("path");
 
 class DesktopMacosNotify extends Node {
-    constructor(node, RED) {
-        super(node, RED)
+    constructor(node, RED, opts) {
+        super(node, RED, {...opts})
     }
 
     static schema = new Schema({

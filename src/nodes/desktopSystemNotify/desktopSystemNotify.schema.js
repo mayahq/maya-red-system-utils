@@ -7,8 +7,8 @@ const notifier = require("node-notifier");
 const path = require("path");
 
 class DesktopSystemNotify extends Node {
-    constructor(node, RED) {
-        super(node, RED)
+    constructor(node, RED, opts) {
+        super(node, RED, {...opts})
     }
 
     static schema = new Schema({

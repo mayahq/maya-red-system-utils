@@ -7,8 +7,8 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 class DesktopMacosFileSearch extends Node {
-    constructor(node, RED) {
-        super(node, RED)
+    constructor(node, RED, opts) {
+        super(node, RED, {...opts})
     }
 
     static schema = new Schema({

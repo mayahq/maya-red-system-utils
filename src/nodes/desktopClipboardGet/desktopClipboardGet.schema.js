@@ -6,8 +6,8 @@ const {
 const clipboard = require("copy-paste");
 
 class DesktopClipboardGet extends Node {
-    constructor(node, RED) {
-        super(node, RED)
+    constructor(node, RED, opts) {
+        super(node, RED, {...opts})
     }
 
     static schema = new Schema({
@@ -26,7 +26,7 @@ class DesktopClipboardGet extends Node {
     }
 
     async onMessage(msg, vals) {
-        clipboard.paste(function (error, p) {
+        clipboard.paste((error, p) => {
             if (error) {
                 this.setStatus("ERROR", "error: " + error.toString().substring(0, 10) + "...");
             } else {
