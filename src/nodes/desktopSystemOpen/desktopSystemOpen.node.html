@@ -1,0 +1,94 @@
+<script type='text/javascript'>
+    RED.nodes.registerType("desktop-system-open", {
+        category: "Maya Red System Utils",
+        color: "#8BBDD9",
+        defaults: {
+            name: {
+                value: ""
+            },
+            isProfileConfigNode: {
+                value: false
+            },
+            target: {
+                value: ""
+            },
+            payloadTypetarget: {
+                value: "str"
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "fa-file-code-o.png",
+        label: function() {
+            return this.name || "desktop-system-open"
+        },
+        paletteLabel: "desktop-system-open",
+        exportable: true,
+        oneditprepare: function() {
+            if (this.payloadTypetarget === null) {
+                if (this.target === "") {
+                    this.payloadTypetarget = "date"
+                } else {
+                    this.payloadTypetarget = "str"
+                }
+            } else if (this.payloadTypetarget === 'string' || this.payloadTypetarget === 'none') {
+                this.payloadTypetarget = "str"
+            }
+
+            $("#node-input-payloadTypetarget").val(this.payloadTypetarget)
+            $("#node-input-target").typedInput({
+                default: "str",
+                typeField: $("#node-input-payloadTypetarget"),
+                types: ["msg", "flow", "global", "str"]
+            })
+            $("#node-input-target").typedInput("type", this.payloadTypetarget)
+
+        },
+        oneditsave: function() {},
+        oneditcancel: function() {},
+        oneditdelete: function() {},
+        oneditresize: function() {},
+        onpaletteadd: function() {},
+        onpaletteremove: function() {}
+    });
+</script>
+
+<script type="text/html" data-template-name="desktop-system-open">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-target">target</label>
+        <input type="text" id="node-input-target"></input>
+        <input type="hidden" id="node-input-payloadTypetarget">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="desktop-system-open">
+    <h2>Description</h2>
+    <p>Query opens tabs based on criteria like URL, muted status</p>
+
+    <h2>Config</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+
+
+    <h2>Outputs</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+</script>

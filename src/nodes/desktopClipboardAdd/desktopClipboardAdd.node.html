@@ -1,0 +1,94 @@
+<script type='text/javascript'>
+    RED.nodes.registerType("desktop-clipboard-add", {
+        category: "Maya Red System Utils",
+        color: "#8BBDD9",
+        defaults: {
+            name: {
+                value: ""
+            },
+            isProfileConfigNode: {
+                value: false
+            },
+            text: {
+                value: ""
+            },
+            payloadTypetext: {
+                value: "str"
+            },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "fa-file-code-o.png",
+        label: function() {
+            return this.name || "desktop-clipboard-add"
+        },
+        paletteLabel: "desktop-clipboard-add",
+        exportable: true,
+        oneditprepare: function() {
+            if (this.payloadTypetext === null) {
+                if (this.text === "") {
+                    this.payloadTypetext = "date"
+                } else {
+                    this.payloadTypetext = "str"
+                }
+            } else if (this.payloadTypetext === 'string' || this.payloadTypetext === 'none') {
+                this.payloadTypetext = "str"
+            }
+
+            $("#node-input-payloadTypetext").val(this.payloadTypetext)
+            $("#node-input-text").typedInput({
+                default: "str",
+                typeField: $("#node-input-payloadTypetext"),
+                types: ["msg", "flow", "global", "str"]
+            })
+            $("#node-input-text").typedInput("type", this.payloadTypetext)
+
+        },
+        oneditsave: function() {},
+        oneditcancel: function() {},
+        oneditdelete: function() {},
+        oneditresize: function() {},
+        onpaletteadd: function() {},
+        onpaletteremove: function() {}
+    });
+</script>
+
+<script type="text/html" data-template-name="desktop-clipboard-add">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" style="width:70%;" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-text">text</label>
+        <input type="text" id="node-input-text"></input>
+        <input type="hidden" id="node-input-payloadTypetext">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="desktop-clipboard-add">
+    <h2>Description</h2>
+    <p>Query opens tabs based on criteria like URL, muted status</p>
+
+    <h2>Config</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+
+
+    <h2>Outputs</h2>
+    <dl class="message-properties">
+
+        <dt>payload<span class="property-type">various</span></dt>
+        <dd>The configured payload of the message.</dd>
+
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd>An optional property</dd>
+
+    </dl>
+</script>
