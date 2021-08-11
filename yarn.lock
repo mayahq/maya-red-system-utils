@@ -447,11 +447,6 @@ path-is-absolute@^1.0.0:
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
 
-path-validation@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/path-validation/-/path-validation-0.2.3.tgz#70a3e5762b83e531397942854d44c99e83c8818e"
-  integrity sha512-SSMuyxeFiYKggQDvDVS+Fpy8cJXr8cOAjIGlwg8PN0xRCLd3gg5JwsNFkD4DUxaMMlbs4p9w0xQN7rGuW/QzVA==
-
 proto-list@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"

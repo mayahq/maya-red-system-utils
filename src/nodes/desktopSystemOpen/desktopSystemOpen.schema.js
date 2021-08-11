@@ -71,13 +71,16 @@ class DesktopSystemOpen extends Node {
             }
         };
 
-        if(stringIsAValidUrl(target)){
-          if(target.startsWith('https://') || target.startsWith('http://')){
-            openFromElectron("master","url",target);
+        if(stringIsAValidUrl(vals.target)){
+          if (
+            vals.target.startsWith("https://") ||
+            vals.target.startsWith("http://")
+          ) {
+            openFromElectron("master", "url", vals.target);
           }
         }
         else{
-          openFromElectron("master","path",target);
+          openFromElectron("master", "path", vals.target);
         }
     }
 }
