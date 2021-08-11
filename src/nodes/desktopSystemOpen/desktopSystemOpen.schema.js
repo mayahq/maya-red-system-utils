@@ -4,8 +4,6 @@ const {
     fields
 } = require('@mayahq/module-sdk');
 const FastMQ = require('fastmq');
-const validator = require("path-validation")
-
 class DesktopSystemOpen extends Node {
     constructor(node, RED, opts) {
         super(node, RED, {...opts})
@@ -64,12 +62,22 @@ class DesktopSystemOpen extends Node {
             });
         }
 
-        // assuming its either url or filepath
-        if(validator.isAbsolutePath(vals.target)){
-            openFromElectron("master","path",vals.target);
+        const stringIsAValidUrl = (s) => {
+            try {
+                new URL(s);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        };
+
+        if(stringIsAValidUrl(target)){
+          if(target.startsWith('https://') || target.startsWith('http://')){
+            openFromElectron("master","url",target);
+          }
         }
         else{
-            openFromElectron("master","url",vals.target);
+          openFromElectron("master","path",target);
         }
     }
 }
