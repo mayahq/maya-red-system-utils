@@ -52,6 +52,7 @@ class DesktopSystemOpen extends Node {
                 requestChannel.disconnect();
             }).catch((err) => {
                 console.log('Got error:', err.stack);
+                msg["__isError"] = true
             }).finally(() => {
                 if(requestChannel){
                     if(!requestChannel._socket.destroyed){
@@ -59,6 +60,7 @@ class DesktopSystemOpen extends Node {
                         requestChannel.disconnect();
                     }
                 }
+                return msg;
             });
         }
 

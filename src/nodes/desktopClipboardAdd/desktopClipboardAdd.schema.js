@@ -36,6 +36,7 @@ class DesktopClipboardAdd extends Node {
           "error: " + error.toString().substring(0, 10) + "..."
         );
       } else {
+        msg["__isError"] = true;
         this.setStatus("SUCCESS", "added to clipboard!");
       }
       return msg;

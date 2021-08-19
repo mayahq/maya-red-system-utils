@@ -48,23 +48,25 @@ class DesktopMacosNotify extends Node {
         nc.notify(options, (err, response, metadata) => {
             // Response is response from notification
             if (err){
-              console.log(err)
+              msg["__isError"] = true;
               this.setStatus("ERROR", "error: " + err.toString().substring(0, 10) + "...");
-              // throw err
-            }
-            this.setStatus("SUCCESS", "");
-            msg.notification = metadata;
-            if (metadata.activationType === "timeout") {
-              return [null, null, msg, null, null];
-            } else if (metadata.activationType === "replied") {
-              msg.notification.reply = metadata.activationValue
-              return [null, msg, null, null, null];
-            } else if (metadata.activationType === "actionClicked") {
-              return [null, null, null, msg, null];
-            } else if (metadata.activationType === "closed") {
-              return [null, null, null, null, msg];
+              return [msg, null, null, null, null]
             } else {
-              return [msg, null, null, null, null];
+              this.setStatus("SUCCESS", "");
+              msg.notification = metadata;
+              if (metadata.activationType === "timeout") {
+                return [null, null, msg, null, null];
+              } else if (metadata.activationType === "replied") {
+                msg.notification.reply = metadata.activationValue
+                return [null, msg, null, null, null];
+              } else if (metadata.activationType === "actionClicked") {
+                return [null, null, null, msg, null];
+              } else if (metadata.activationType === "closed") {
+                return [null, null, null, null, msg];
+              } else {
+                return [msg, null, null, null, null];
+              }
+
             }
             // Metadata contains activationType, activationAt, deliveredAt
         });

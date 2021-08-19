@@ -139,6 +139,7 @@ class DesktopMacosFileSearch extends Node {
 
         const {out,err} = await findFiles(vals.query, vals.kind, vals.onlyin);
         if(err){
+            msg["__isError"] = true;
             this.setStatus("ERROR", "error: " + error.toString().substring(0, 10) + "...");
         }
         else {
