@@ -26,16 +26,18 @@ class DesktopClipboardGet extends Node {
     }
 
     async onMessage(msg, vals) {
-        clipboard.paste((error, p) => {
-            if (error) {
-                msg["__isError"] = true;
-                this.setStatus("ERROR", "error: " + error.toString().substring(0, 10) + "...");
-            } else {
-                this.setStatus("SUCCESS", "retrieved from clipboard!");
-            }
-            msg.clipboard = p;
-            return msg;
-        });
+        return await new Promise((resolve, reject) => {
+            clipboard.paste((error, p) => {
+                if (error) {
+                    msg["__isError"] = true;
+                    this.setStatus("ERROR", "error: " + error.toString().substring(0, 10) + "...");
+                } else {
+                    this.setStatus("SUCCESS", "retrieved from clipboard!");
+                }
+                msg.clipboard = p;
+                resolve(msg)
+            });
+        })
     }
 }
 
