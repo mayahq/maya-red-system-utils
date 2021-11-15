@@ -72,7 +72,7 @@
    });
 </script>
 
-<script type="text/x-red" data-template-name="desktop-macos-file-search">
+<script type="text/html" data-template-name="desktop-macos-file-search">
 
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -107,8 +107,22 @@
 
 </script>
 
-<script type="text/x-red" data-help-name="desktop-macos-file-search">
-  <p>Search for files on MacOS. It takes the following inputs:<br><br>
+<script type="text/html" data-help-name="desktop-macos-file-search">
+  <h2 data-type="description-title">Description</h2>
+  <p data-type="description-summary">Search for files and apps on MacOS.</p>
+  
+  <h2>Config</h2>
+  <dl class="message-properties">
+    <dt>
+      <snap class="property-name">query</snap>
+      <snap class="property-type">str</snap>
+    </dt>
+    <dd>String input to search for file and apps on MacOS</dd>
+  </dl>
+
+  <h2>Usage</h2>
+  <p>
+    It takes the following inputs:<br><br>
 
     query: name of the file/search term<br>
     kind: The file type (default is 'app'). If msg.payload.kind is selected, it selects the value from msg.payload.kind<br>
