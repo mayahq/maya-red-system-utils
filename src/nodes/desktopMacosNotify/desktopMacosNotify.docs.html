@@ -1,25 +1,82 @@
-<h2>Description</h2>
-<p>Query opens tabs based on criteria like URL, muted status</p>
+<h2 data-type="description-title">Description</h2>
+<p data-type="description-summary">
+	Send custom native notifications on MacOS.
+</p>
+<br />
 
 <h2>Config</h2>
 <dl class="message-properties">
+	<dt>title<span class="property-type">string</span></dt>
+	<dd>Title heading of the desktop notification sent.</dd>
 
-    <dt>payload<span class="property-type">various</span></dt>
-    <dd>The configured payload of the message.</dd>
+	<dt>message<span class="property-type">string</span></dt>
+	<dd>Main message of the desktop notification.</dd>
 
-    <dt class="optional">topic <span class="property-type">string</span></dt>
-    <dd>An optional property</dd>
+	<dt>closeBtn<span class="property-type">string</span></dt>
+	<dd>Label to put on the close notification button.</dd>
 
+	<dt>actionBtn<span class="property-type">string</span></dt>
+	<dd>Label to put on the custom action button on the notification.</dd>
+
+	<dt>reply<span class="property-type">checkbox</span></dt>
+	<dd>Get reply from user on showing notification?</dd>
+
+	<dt>sound<span class="property-type">checkbox</span></dt>
+	<dd>Enable default notification sound?</dd>
+
+	<dt>wait<span class="property-type">checkbox</span></dt>
+	<dd>Wait for user action before timeout in 5s?</dd>
 </dl>
+<br />
 
-
-<h2>Outputs</h2>
-<dl class="message-properties">
-
-    <dt>payload<span class="property-type">various</span></dt>
-    <dd>The configured payload of the message.</dd>
-
-    <dt class="optional">topic <span class="property-type">string</span></dt>
-    <dd>An optional property</dd>
-    
-</dl>
+<h3>Outputs</h3>
+<ol class="node-ports">
+	<li>
+		onClick
+		<dl class="message-properties">
+			<dd>
+				If notification is just clicked, then <code>msg</code> is outputted from
+				this port. Metadata in <code>msg.notification</code>.
+			</dd>
+		</dl>
+	</li>
+	<li>
+		onReply
+		<dl class="message-properties">
+			<dd>
+				If user replies to the notification, then <code>msg</code> is outputted
+				from this port, find reply at <code>msg.notification.reply</code>. Make
+				sure <code>reply</code> is switched to true.
+			</dd>
+		</dl>
+	</li>
+	<li>
+		onAction
+		<dl class="message-properties">
+			<dd>
+				If user clicks on the <code>actionBtn</code>, then <code>msg</code> is
+				outputted from this port.Metadata in <code>msg.notification</code>.
+			</dd>
+		</dl>
+	</li>
+	<li>
+		onTimeout
+		<dl class="message-properties">
+			<dd>
+				If notification is not interacted with, then <code>msg</code> is
+				outputted from this port after timeout of 5 seconds. Metadata in
+				<code>msg.notification</code>.
+			</dd>
+		</dl>
+	</li>
+	<li>
+		onClose
+		<dl class="message-properties">
+			<dd>
+				If notification is closed manually from the <code>closeBtn</code>, then
+				<code>msg</code> is outputted from this port. Metadata in
+				<code>msg.notification</code>.
+			</dd>
+		</dl>
+	</li>
+</ol>

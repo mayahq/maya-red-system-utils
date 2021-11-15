@@ -36,29 +36,14 @@
 </script>
 
 <script type="text/html" data-help-name="desktop-clipboard-get">
-    <h2>Description</h2>
-    <p>Query opens tabs based on criteria like URL, muted status</p>
-
-    <h2>Config</h2>
+    <h2 data-type="description-title">Description</h2>
+    <p data-type="description-summary">Get and emit last copied text from clipboard.</p>
+    <h2>Output</h2>
     <dl class="message-properties">
-
-        <dt>payload<span class="property-type">various</span></dt>
-        <dd>The configured payload of the message.</dd>
-
-        <dt class="optional">topic <span class="property-type">string</span></dt>
-        <dd>An optional property</dd>
-
-    </dl>
-
-
-    <h2>Outputs</h2>
-    <dl class="message-properties">
-
-        <dt>payload<span class="property-type">various</span></dt>
-        <dd>The configured payload of the message.</dd>
-
-        <dt class="optional">topic <span class="property-type">string</span></dt>
-        <dd>An optional property</dd>
-
+        <dt>
+            <span class="property-name">msg.clipboard</span>
+            <span class="property-type">str</span>
+        </dt>
+        <dd>Last added clipboard entry emitted to <code>msg.clipboard</code></dd>
     </dl>
 </script>

@@ -1,25 +1,24 @@
-<h2>Description</h2>
-<p>Query opens tabs based on criteria like URL, muted status</p>
+<h2 data-type="description-title">Description</h2>
+<p data-type="description-summary">Search for files and apps on MacOS.</p>
 
 <h2>Config</h2>
 <dl class="message-properties">
-
-    <dt>payload<span class="property-type">various</span></dt>
-    <dd>The configured payload of the message.</dd>
-
-    <dt class="optional">topic <span class="property-type">string</span></dt>
-    <dd>An optional property</dd>
-
+	<dt>
+		<snap class="property-name">query</snap>
+		<snap class="property-type">str</snap>
+	</dt>
+	<dd>String input to search for file and apps on MacOS</dd>
 </dl>
 
+<h2>Usage</h2>
+<p>
+	It takes the following inputs:<br /><br />
 
-<h2>Outputs</h2>
-<dl class="message-properties">
+	query: name of the file/search term<br />
+	kind: The file type (default is 'app'). If msg.payload.kind is selected, it
+	selects the value from msg.payload.kind<br />
+	Directory: Directory inside which you want to search for the file<br /><br />
 
-    <dt>payload<span class="property-type">various</span></dt>
-    <dd>The configured payload of the message.</dd>
-
-    <dt class="optional">topic <span class="property-type">string</span></dt>
-    <dd>An optional property</dd>
-    
-</dl>
+	If the node is pre-configured by the user, it takes that value, otherwise it
+	fetches values from msg.payload
+</p>
